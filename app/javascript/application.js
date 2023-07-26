@@ -22,7 +22,7 @@ document.addEventListener("turbo:before-render", (event) => {
       },
       onElUpdated: (el) => {
         if (hasAttr(el, "data-morphdom-permanent")) {
-          console.log("it's never gonna happen");
+          console.error("permanent element updated");
         }
       },
     });
