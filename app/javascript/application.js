@@ -2,14 +2,30 @@
 import "@hotwired/turbo-rails";
 import morphdom from "morphdom";
 
+import { hasAttr } from "./utils";
+
 let prevPath = window.location.pathname;
 
 document.addEventListener("turbo:before-render", (event) => {
   Turbo.navigator.currentVisit.scrolled = prevPath === window.location.pathname;
   prevPath = window.location.pathname;
+
   event.detail.render = async (prevEl, newEl) => {
     await new Promise((resolve) => setTimeout(() => resolve(), 0));
-    morphdom(prevEl, newEl);
+
+    morphdom(prevEl, newEl, {
+      onBeforeElUpdated: (fromEl, toEl) => {
+        return (
+          !fromEl.isEqualNode(toEl) &&
+          !hasAttr(fromEl, "data-morphdom-permanent")
+        );
+      },
+      onElUpdated: (el) => {
+        if (hasAttr(el, "data-morphdom-permanent")) {
+          console.error("permanent element updated");
+        }
+      },
+    });
   };
 
   if (document.startViewTransition) {
