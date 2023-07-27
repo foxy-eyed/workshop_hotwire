@@ -1,0 +1,11 @@
+<%= render partial: "artists/artist_header", locals: {artist:} %>
+
+<hr class="my-4">
+
+<div class="mt-4 flex items-center justify-between">
+  <h2 class="text-header-2">Tracks</h2>
+</div>
+
+<ul class="tracks mt-2">
+  <%= render collection: tracks, partial: "tracks/track", locals: {enqueueble: true} %>
+</ul>
