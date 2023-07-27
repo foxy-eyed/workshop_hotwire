@@ -22,7 +22,7 @@ class Artists::TracksController < ApplicationController
       page = params.fetch(:page, 0).to_i
       limit = params.fetch(:limit, TRACKS_PER_PAGE).to_i
       offset = limit * page
-      total_pages = artist_resource.tracks.count / limit
+      total_pages = (1.0 * artist_resource.tracks.count / limit).ceil
       next_page = (page < total_pages) ? page + 1 : nil
 
       {current_page: page, limit:, offset:, next_page:, total_pages:}
