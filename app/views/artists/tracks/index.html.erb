@@ -1,3 +1,5 @@
+<%# locals: (artist:, tracks:, **pagination_params) -%>
+
 <%= render partial: "artists/artist_header", locals: {artist:} %>
 
 <hr class="my-4">
@@ -7,5 +9,5 @@
 </div>
 
 <ul class="tracks mt-2">
-  <%= render collection: tracks, partial: "tracks/track", locals: {enqueueble: true} %>
+  <%= render partial: "list", locals: {artist:, tracks:, **pagination_params} %>
 </ul>
