@@ -5,7 +5,7 @@ class Artists::TracksController < ApplicationController
     tracks = artist_resource.tracks.ordered.limit(pagination_params[:limit]).offset(pagination_params[:offset])
 
     if turbo_frame_request?
-      render partial: "list", locals: {artist: artist_resource, tracks:, **pagination_params}
+      render partial: "tracks", locals: {artist: artist_resource, tracks:, **pagination_params}
     else
       render action: :index, locals: {artist: artist_resource, tracks:, **pagination_params}
     end
