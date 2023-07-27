@@ -1,24 +1,11 @@
-<div class="artist-header">
-  <div class="artist-image">
-    <% if artist.cover.attached? %>
-      <%= image_tag artist.cover %>
-    <% end %>
-  </div>
-  <div class="artist-info">
-    <div class="flex items-center">
-      <h1 class="text-header-2"><%= artist.name %></h1>
-    </div>
-    <div>
-      <% artist.tags.each do |tag| %>
-        <span class="meta"><%= tag %></span>
-      <% end %>
-    </div>
-  </div>
-</div>
+<%= render partial: "artist_header", locals: {artist:} %>
 
 <hr class="my-4">
 
-<h2 class="mt-4 text-header-2">Popular</h2>
+<div class="mt-4 flex items-center justify-between">
+  <h2 class="text-header-2">Popular</h2>
+  <%= link_to "See all", artist_tracks_path(artist), class: "text-secondary hover:text-primary transition-colors" %>
+</div>
 <ul class="tracks mt-2">
   <%= render tracks, enqueueble: true %>
   <li class="track">
