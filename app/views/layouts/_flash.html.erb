@@ -2,7 +2,7 @@
 <div class="fixed z-50 right-0 mr-4 top-0 mt-[80px]" id="flash">
   <div class="flex justify-center">
     <% if flash[:notice] %>
-      <div class="flash notice" role="alert" data-turbo-temporary data-controller="removeable" data-removeable-after-value="5">
+      <div id="flash-<%= Time.current.to_i %>" class="flash notice" role="alert" data-turbo-temporary data-controller="removeable" data-removeable-after-value="5">
         <i class="flash--close-btn" data-action="click->removeable#remove">
           <%= render "icons/close" %>
         </i>
@@ -11,7 +11,7 @@
     <% end %>
 
     <% if flash[:alert] %>
-      <div class="flash alert" role="alert" data-turbo-temporary data-controller="removeable" data-removeable-after-value="5">
+      <div id="flash-<%= Time.current.to_i %>" class="flash alert" role="alert" data-turbo-temporary data-controller="removeable" data-removeable-after-value="5">
         <i class="flash--close-btn" data-action="click->removeable#remove">
           <%= render "icons/close" %>
         </i>
