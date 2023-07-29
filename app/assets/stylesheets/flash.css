@@ -1,6 +1,6 @@
 @layer components {
   .flash {
-    @apply max-w-sm bg-white opacity-95 border-t-4 border-slate-900 rounded-b text-black px-4 py-3 shadow-md;
+    @apply max-w-sm bg-white opacity-95 border-t-4 border-slate-900 rounded-b text-black pl-4 pr-8 py-3 shadow-md relative;
   }
 
   .flash.notice {
@@ -9,5 +9,9 @@
 
   .flash.alert {
     @apply border-red-800 text-red-800;
+  }
+
+  .flash--close-btn {
+    @apply absolute top-1 right-1 cursor-pointer opacity-60 hover:opacity-100;
   }
 }
