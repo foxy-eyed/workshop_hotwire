@@ -1,0 +1,5 @@
+<%# locals: (track:, track_counter: nil, track_iteration: nil) -%>
+<li class="nav--search--result">
+  <%= link_to track.title, play_track_path(track), class: "hover:text-primary", data: {"turbo-frame" => "player"} %>
+  <span class="ml-2 text-secondary text-xsmall"><%= track.album.artist.name %></span>
+</li>
