@@ -17,8 +17,25 @@
           </div>
         <% end %>
         <%= f.text_field :username, value: @user.username, require: true, autofocus: true, autocomplete: "username", class: "input mt-2", placeholder: "Username" %>
-        <%= f.password_field :password, required: true, autocomplete: "new-password", class: "input mt-2", placeholder: "Password" %>
-         <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "input mt-2", placeholder: "Confirmation" %>
+
+        <div data-controller="password-visibility" class="relative mt-2">
+          <%= f.password_field :password, required: true, autocomplete: "new-password", class: "input pr-10",
+                               placeholder: "Password", data: {"password-visibility-target": "input"} %>
+          <button type="button" data-action="password-visibility#toggle" class="absolute inset-y-0 right-0 pr-1 flex items-center">
+            <i data-password-visibility-target="icon"><%= render "icons/eye" %></i>
+            <i data-password-visibility-target="icon" class="hidden"><%= render "icons/eye_slash" %></i>
+          </button>
+        </div>
+
+        <div data-controller="password-visibility" class="relative mt-2">
+          <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "input pr-10",
+                               placeholder: "Confirmation", data: {"password-visibility-target": "input"} %>
+          <button type="button" data-action="password-visibility#toggle" class="absolute inset-y-0 right-0 pr-1 flex items-center">
+            <i data-password-visibility-target="icon"><%= render "icons/eye" %></i>
+            <i data-password-visibility-target="icon" class="hidden"><%= render "icons/eye_slash" %></i>
+          </button>
+        </div>
+
         <div class="flex flex-row justify-between items-baseline">
           <%= f.submit "Sign up", class: "button button-primary mt-2" %>
           <%= link_to "Log in", sign_in_path, class: "text-small opacity-50 hover:opacity-100" %>
