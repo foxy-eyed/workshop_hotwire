@@ -1,5 +1,5 @@
 <%# locals: (artists: [], albums: [], tracks: []) -%>
-<%= turbo_frame_tag :search_results, class: "nav--search--frame", target: "_top" do %>
+<%= turbo_frame_tag :search_results, class: "nav--search--frame" do %>
   <% if [artists, albums, tracks].any?(&:present?) %>
     <ul class="nav--search--results">
       <%= render collection: artists, partial: "artist" %>

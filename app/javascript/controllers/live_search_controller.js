@@ -17,6 +17,18 @@ export default class extends Controller {
 
   initialize() {
     this.previewFrame = document.getElementById(this.previewFrameIdValue);
+    this.onFrameUpdate = this.onFrameUpdate.bind(this);
+  }
+
+  connect() {
+    this.previewFrame.addEventListener("turbo:frame-load", this.onFrameUpdate);
+  }
+
+  disconnect() {
+    this.previewFrame.removeEventListener(
+      "turbo:frame-load",
+      this.onFrameUpdate,
+    );
   }
 
   get query() {
@@ -24,8 +36,6 @@ export default class extends Controller {
   }
 
   get searchUrl() {
-    if (this.query.length < 3) return "";
-
     return buildUrlWithQuery(this.searchPathValue, {
       [this.searchParamNameValue]: this.query,
     });
@@ -40,7 +50,32 @@ export default class extends Controller {
   }
 
   updateFrame() {
+    if (this.query.length >= 3) {
+      this.reloadFrame();
+    } else {
+      this.resetFrame();
+    }
+  }
+
+  reloadFrame() {
     this.previewFrame.src = this.searchUrl;
     this.previewFrame.reload();
+  }
+
+  resetFrame() {
+    this.previewFrame.src = "";
+    this.previewFrame.innerHTML = "";
+  }
+
+  onFrameUpdate() {
+    if (this.navigationalElements) {
+      this.navigationalElements.forEach((el) =>
+        el.removeEventListener("turbo:click", this.resetFrame),
+      );
+    }
+    this.navigationalElements = this.previewFrame.querySelectorAll("a");
+    this.navigationalElements.forEach((link) =>
+      link.addEventListener("turbo:click", this.resetFrame),
+    );
   }
 }

@@ -1,5 +1,5 @@
 <%# locals: (album:, album_counter: nil, album_iteration: nil) -%>
 <li class="nav--search--result">
-  <%= link_to album.title, album_path(album), class: "hover:text-secondary" %>
+  <%= link_to album.title, album_path(album), class: "hover:text-secondary", target: "_top" %>
   <span class="ml-2 text-primary text-xsmall"><%= album.artist.name %></span>
 </li>
