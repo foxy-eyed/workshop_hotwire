@@ -19,14 +19,14 @@
         <div class="nav--search--icon">
           <%= render "icons/search" %>
         </div>
-        <%= f.search_field :q, value: params[:q], class: "nav--search--input", data: {
+        <%= f.search_field :q, class: "nav--search--input", data: {
           controller: "live-search",
           action: "live-search#search",
           "live-search-search-path-value": search_path,
           "live-search-preview-frame-id-value": :search_results,
         } %>
       <% end %>
-      <%= turbo_frame_tag :search_results, class: "nav--search--frame" %>
+      <%= turbo_frame_tag :search_results, class: "nav--search--frame", src: search_path %>
     </div>
   </div>
   <div class="nav--right">

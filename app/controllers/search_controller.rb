@@ -1,8 +1,8 @@
 class SearchController < ApplicationController
   def index
-    q = params[:q]
+    q = params.fetch(:q, "")
 
-    if q.blank? || q.length < 3
+    if !turbo_frame_request? && q.length < 3
       return redirect_back(fallback_location: root_path, alert: "Please, enter at least 3 characters")
     end
 
