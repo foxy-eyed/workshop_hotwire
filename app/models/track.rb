@@ -17,6 +17,6 @@ class Track < ApplicationRecord
   scope :ordered, -> { order(position: :asc) }
   scope :popularity_ordered, -> { order(listenings_count: :desc) }
   scope :search, ->(q) {
-    where(arel_table[:title].lower.matches("%#{q.downcase}%"))
+    q.blank? ? none : where(arel_table[:title].lower.matches("%#{q.downcase}%"))
   }
 end

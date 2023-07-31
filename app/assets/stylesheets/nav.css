@@ -23,9 +23,24 @@
   @apply text-secondary;
 }
 
-
 .nav--search--input {
   @apply pl-10 p-1 w-full rounded border-none bg-opacity-0 bg-white transition-colors focus:bg-opacity-90 focus:border focus:border-gray-300 focus:outline-none outline-offset-0 !important;
+}
+
+.nav--search--input:has(+ .nav--search--results) {
+  @apply bg-opacity-90 border border-gray-300;
+}
+
+.nav--search--frame {
+  display: contents;
+}
+
+.nav--search--results {
+  @apply absolute w-[300px] top-0 bg-white mt-8 z-40 shadow-md pt-2;
+}
+
+.nav--search--result {
+  @apply p-2;
 }
 
 .nav--logo {
