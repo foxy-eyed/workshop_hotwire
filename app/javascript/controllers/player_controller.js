@@ -14,13 +14,12 @@ function secondsToDuration(num) {
 export default class extends Controller {
   static targets = ["progress", "time"];
   static outlets = ["track"];
-  static values = { duration: Number, track: String, nextTrackUrl: String };
+  static values = { duration: Number, track: String, nextTrackUrl: String, isPlaying: Boolean };
   static classes = ["playing"];
 
   initialize() {
     this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
     this.handleEnded = this.handleEnded.bind(this);
-    this.playing = false;
   }
 
   trackValueChanged() {
@@ -36,6 +35,14 @@ export default class extends Controller {
     }
   }
 
+  isPlayingValueChanged() {
+    if (this.isPlayingValue) {
+      this.play();
+    } else {
+      this.pause();
+    }
+  }
+
   trackOutletConnected(outlet, el) {
     outlet.togglePlayingIfMatch(this.trackValue);
   }
@@ -46,7 +53,7 @@ export default class extends Controller {
       this.setupAudioListeners();
     }
 
-    if (this.playing) {
+    if (this.isPlayingValue) {
       this.play();
     }
   }
@@ -60,13 +67,11 @@ export default class extends Controller {
   play() {
     this.element.classList.add(this.playingClass);
     this.audio.play();
-    this.playing = true;
   }
 
   pause() {
     this.element.classList.remove(this.playingClass);
     this.audio.pause();
-    this.playing = false;
   }
 
   seek(e) {
