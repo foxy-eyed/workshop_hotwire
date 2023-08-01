@@ -16,15 +16,15 @@
   @apply cursor-pointer;
 }
 
-.player-playing .player-btn[data-action="click->player#play"] {
+.player-btn--pause {
   @apply hidden;
 }
 
-.player-btn[data-action="click->player#pause"] {
+.player-playing .player-btn--play {
   @apply hidden;
 }
 
-.player-playing .player-btn[data-action="click->player#pause"] {
+.player-playing .player-btn--pause {
   @apply block;
 }
 

@@ -1,8 +1,9 @@
-<%# locals: (track:, station: nil, live: false) -%>
+<%# locals: (track:, station: nil, live: false, is_playing: false) -%>
 <div class="player"
   data-controller="player"
   data-player-duration-value="<%= track&.duration %>"
   data-player-track-value="<%= track&.id %>"
+  data-player-is-playing-value="<%= is_playing %>"
   data-player-playing-class="player-playing"
   data-player-next-track-url-value="<%= live ? play_next_live_station_path : (!station && play_next_track_path(track))%>"
   data-player-track-outlet=".track"
@@ -12,14 +13,14 @@
       <div class="player--timeline-progress" style="width:0%;" data-player-target="progress"></div>
     </div>
   <% end %>
-  <% unless station %>
+  <% if live || !station %>
   <div class="player--controls">
-    <span class="player-btn" data-action="click->player#play">
+    <%= button_to "#", method: :post, form: {class: "player-btn player-btn--play", data: {"turbo-command" => "PlayerCommand#resume"}} do %>
       <%= render "icons/play" %>
-    </span>
-    <span class="player-btn" data-action="click->player#pause">
+    <% end %>
+    <%= button_to "#", method: :post, form: {class: "player-btn player-btn--pause", data: {"turbo-command" => "PlayerCommand#pause"}} do %>
       <%= render "icons/pause" %>
-    </span>
+    <% end %>
   </div>
   <% end %>
   <div class="player--track">
