@@ -1,0 +1,16 @@
+<%# locals: (artist:, tracks:, cursor:, next_cursor:) -%>
+<%= turbo_frame_tag dom_id(artist, :"tracks_#{cursor}") do %>
+  <%= render tracks, enqueueble: true, offset: cursor %>
+
+  <% if next_cursor %>
+    <%= turbo_frame_tag dom_id(artist, :"tracks_#{next_cursor}") do %>
+      <li class="track">
+        <span class="track--number"></span>
+        <%= link_to "Load more",
+                    artist_path(artist, cursor: next_cursor),
+                    data: {"turbo-frame": dom_id(artist, :"tracks_#{next_cursor}")},
+                    class: "text-secondary hover:text-primary transition-colors" %>
+      </li>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,10 +1,10 @@
-<%# locals: (track:, track_counter: nil, track_iteration: nil, deletable: false, enqueueble: false) -%>
+<%# locals: (track:, track_counter: nil, track_iteration: nil, deletable: false, enqueueble: false, offset: 0) -%>
 <li class="track">
   <span class="track--number">
     <% if track.id == current_track&.id %>
       <span class="track--number--text track--playing-indicator"></span>
     <% else %>
-      <%= track_counter + 1 %>
+      <%= offset + track_counter + 1 %>
     <% end %>
   </span>
   <% if current_user&.live_station&.live? %>

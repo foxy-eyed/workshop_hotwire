@@ -1,13 +1,23 @@
 class ArtistsController < ApplicationController
+  TRACKS_PER_PAGE = 5
+  MAX_POPULAR_TRACKS = 10
+
   def show
     artist = Artist.find(params[:id])
     albums = selected_albums(artist.albums, params[:album_type]).with_attached_cover.preload(:artist)
-    tracks = artist.tracks.popularity_ordered.limit(5)
 
-    if turbo_frame_request?
+    cursor = params.fetch(:cursor, 0).to_i
+    next_cursor = (cursor + TRACKS_PER_PAGE >= MAX_POPULAR_TRACKS) ? nil : cursor + TRACKS_PER_PAGE
+
+    tracks = artist.tracks.popularity_ordered.limit(TRACKS_PER_PAGE).offset(cursor)
+
+    case turbo_frame_request_id
+    when /\Adiscography_artist_\d+\z/
       render partial: "discography", locals: {artist:, albums:}
+    when /\Atracks_\d+_artist_\d+\z/
+      render partial: "popular_tracks", locals: {artist:, tracks:, cursor:, next_cursor:}
     else
-      render action: :show, locals: {artist:, albums:, tracks:}
+      render action: :show, locals: {artist:, albums:, tracks:, cursor:, next_cursor:}
     end
   end
 
