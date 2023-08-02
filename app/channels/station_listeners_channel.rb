@@ -1,4 +1,6 @@
 class StationListenersChannel < Turbo::StreamsChannel
+  include ActionView::RecordIdentifier
+
   def subscribed
     super
     StationTracker.track_listener(station)
@@ -21,7 +23,7 @@ class StationListenersChannel < Turbo::StreamsChannel
 
     Turbo::StreamsChannel.broadcast_update_to(
       verified_stream_name_from_params,
-      target: "listeners-counter-#{station.id}",
+      target: dom_id(station, "listeners_counter"),
       content: counter
     )
   end
