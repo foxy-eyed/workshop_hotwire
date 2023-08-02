@@ -24,6 +24,8 @@
   <% end %>
   <div class="player--track">
     <% if station %>
+      <%= turbo_stream_from station, channel: StationListenersChannel, data: {station_id: station.id} %>
+      <div id="listeners-counter-<%= station.id %>"></div>
       <% if live %>
         <div class="player--radio">
           <span class="player--signal-icon">
