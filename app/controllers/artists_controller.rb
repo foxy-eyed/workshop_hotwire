@@ -1,13 +1,13 @@
 class ArtistsController < ApplicationController
   TRACKS_PER_PAGE = 5
-  MAX_POPULAR_TRACKS = 10
+  MAX_TRACKS = 10
 
   def show
     artist = Artist.find(params[:id])
     albums = selected_albums(artist.albums, params[:album_type]).with_attached_cover.preload(:artist)
 
     cursor = params.fetch(:cursor, 0).to_i
-    next_cursor = (cursor + TRACKS_PER_PAGE >= MAX_POPULAR_TRACKS) ? nil : cursor + TRACKS_PER_PAGE
+    next_cursor = (cursor + TRACKS_PER_PAGE >= MAX_TRACKS) ? nil : cursor + TRACKS_PER_PAGE
 
     tracks = artist.tracks.popularity_ordered.limit(TRACKS_PER_PAGE).offset(cursor)
 
