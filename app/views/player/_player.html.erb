@@ -24,12 +24,21 @@
   <% end %>
   <div class="player--track">
     <% if station %>
+      <%= turbo_stream_from station, channel: StationListenersChannel, data: {station_id: station.id} %>
       <% if live %>
         <div class="player--radio">
           <span class="player--signal-icon">
             <%= render "icons/signal" %>
           </span>
           <%= link_to "Live!", live_station_path, class: "player--title ml-2" %>
+          <span class="player--listeners">
+            <span class="player--listeners--icon">
+              <%= render "icons/user_circle" %>
+            </span>
+            <span class="player--listeners--count" id="<%= dom_id(station, "listeners_counter") %>">
+              <%= StationTracker.current_listeners(station) %>
+            </span>
+          </span>
         </div>
       <% else %>
         <div class="player--radio">
